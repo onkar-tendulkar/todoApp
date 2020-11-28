@@ -6,11 +6,13 @@ public class ToDo {
     private String name;
     private String details;
     private Date time;
+    private boolean done;
 
     public ToDo(String name, String details, Date time) {
         this.name = name;
         this.details = details;
         this.time = time;
+        this.done = false;
     }
 
     public String getName() {
@@ -31,5 +33,13 @@ public class ToDo {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public boolean isDone() {
+        return done;
     }
 }

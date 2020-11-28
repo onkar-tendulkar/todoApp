@@ -41,4 +41,16 @@ public class ToDoController {
         }
         return "SUCCESS";
     }
+
+    @PostMapping("todo/{name}/done")
+    public ToDo markDone(@PathVariable final String name) {
+        Optional<ToDo> tdOp = todos.stream().filter(todo -> todo.getName().equals(name)).findFirst();
+        if(tdOp.isPresent()) {
+            tdOp.get().setDone(true);
+            return tdOp.get();
+        }
+        else {
+            throw new RuntimeException("No such TODO exists");
+        }
+    }
 }
