@@ -1,0 +1,32 @@
+from flask import Flask, request, send_from_directory
+from os.path import exists, dirname, basename
+
+app = Flask("onkar")
+app.config['DEBUG'] = True
+
+@app.route("/file")
+def file() -> str:
+    html1 = "<html><body>  <h1>Enter full path of file</h1>"
+    html2 = "<form method='POST' action='/fetch'>"
+    html3 = "<input name='path' width='1000' type='text'/><br><br>"
+    html4 = "<input value='Fetch' type='SUBMIT'/>"
+    html5 = "</form>"
+    html6 = "  </body></html>"
+    return html1 + html2 + html3 + html4 + html5 + html6
+
+@app.route("/fetch", methods=["POST"])
+def fetch() -> str:
+    path = request.form["path"]
+    print(dirname(path),"---", basename(path))
+    file_exists = exists(path)
+    if file_exists:
+        print("fetching ",path)
+        dir = dirname(path)
+        filename = basename(path)
+        print("Directory: ",dir," File:,", filename)
+        return send_from_directory(dir,filename , as_attachment=True)
+    else:
+        return ("file does not exist : ",path)
+
+
+app.run()
